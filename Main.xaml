@@ -147,6 +147,15 @@
                     </ui:ForEach.Body>
                   </ui:ForEach>
                 </Sequence>
+                <FlowStep.Next>
+                  <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_36">
+                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke workflow file" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="myLogger.xaml">
+                      <ui:InvokeWorkflowFile.Arguments>
+                        <InArgument x:TypeArguments="x:String" x:Key="message">ログ出力！</InArgument>
+                      </ui:InvokeWorkflowFile.Arguments>
+                    </ui:InvokeWorkflowFile>
+                  </FlowStep>
+                </FlowStep.Next>
               </FlowStep>
             </FlowStep.Next>
           </FlowStep>
@@ -313,7 +322,8 @@
     <x:Reference>__ReferenceID9</x:Reference>
     <x:Reference>__ReferenceID10</x:Reference>
     <x:Reference>__ReferenceID11</x:Reference>
-    <sads:DebugSymbol.Symbol>dzRUOlxEcm9wYm94XG1hc2F0b21pU2hhcmVcZ2l0XHVpcGF0aF9zYW1wbGVcTWFpbi54YW1sIj0DvQIPAgEBQAlhFAIBHGQNehgCAQ99EZUBHAIBAkQLSxQCASlMC2AYAgEdZkhmjQECARBoD20eAgEYbg95HAIBEX9cf9cBAgEDgQETiAEcAgELiQETlAEgAgEESThJoAECASxGOUZDAgEqTH5MigECASdSEV0cAgEeakRqSwIBGmw4bD4CARluggFuiwECARZ0FXYgAgEShgE+hgFFAgEOgwE/gwFPAgEMiQGGAYkBlwECAQmPARmRASQCAQVTE1wYAgEfdRd1jwECAROQARuQAX0CAQZTIVNMAgEgVRdVnwECASRYF1oiAgEidYQBdYwBAgEUkAFykAF6AgEHVW5VnAECASVZGVlPAgEj</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID12</x:Reference>
+    <sads:DebugSymbol.Symbol>dzRUOlxEcm9wYm94XG1hc2F0b21pU2hhcmVcZ2l0XHVpcGF0aF9zYW1wbGVcTWFpbi54YW1sJT0DxwIPAgEBQAlhFAIBH2QNehgCARJ9EZUBHAIBBZgBFZwBLQIBAkQLSxQCASxMC2AYAgEgZkhmjQECARNoD20eAgEbbg95HAIBFH9cf9cBAgEGgQETiAEcAgEOiQETlAEgAgEHmAHBAZgB0AECAQSaAVCaAVUCAQNJOEmgAQIBL0Y5RkMCAS1MfkyKAQIBKlIRXRwCASFqRGpLAgEdbDhsPgIBHG6CAW6LAQIBGXQVdiACARWGAT6GAUUCARGDAT+DAU8CAQ+JAYYBiQGXAQIBDI8BGZEBJAIBCFMTXBgCASJ1F3WPAQIBFpABG5ABfQIBCVMhU0wCASNVF1WfAQIBJ1gXWiICASV1hAF1jAECAReQAXKQAXoCAQpVblWcAQIBKFkZWU8CASY=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -376,10 +386,25 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ForEach`1_4" sap:VirtualizedContainerService.HintSize="287,319" />
-      <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="309,543">
+      <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_36">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">170,434.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -388,6 +413,7 @@
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">180,334.5</av:Point>
             <av:Size x:Key="ShapeSize">200,51</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">280,385.5 280,415.5 270,415.5 270,434.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -629,7 +655,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="654,716" />
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="654,756" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
