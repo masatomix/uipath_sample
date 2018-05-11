@@ -78,7 +78,7 @@
                 <Sequence.Variables>
                   <Variable x:TypeArguments="x:String" Name="config_str" />
                 </Sequence.Variables>
-                <ui:ReadTextFile Content="[config_str]" DisplayName="Read text file" FileName="config/local.json" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
+                <ui:ReadTextFile Content="[config_str]" DisplayName="Read text file" FileName="config/default.json" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
                 <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_6" Text="[config_str]" />
                 <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_3" JsonObject="[config]" JsonString="[config_str]" />
               </Sequence>
@@ -792,14 +792,14 @@
       </Sequence>
     </FlowStep>
     <x:Reference>__ReferenceID12</x:Reference>
-    <sads:DebugSymbol.Symbol>dx5aOlxnaXRcdWlwYXRoX3NhbXBsZVxNYWluLnhhbWwLRAOcBg8CAQFKCZkBFQIBAk0PVBoCAQNREVGmAQIBDFIRUnkCAQlTEVPKAQIBBFFfUXICAQ9RKlE4AgENUmhSdgIBClO5AVPHAQIBB1OjAVOtAQIBBQ==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dx5aOlxnaXRcdWlwYXRoX3NhbXBsZVxNYWluLnhhbWwLRAOcBg8CAQFKCZkBFQIBAk0PVBoCAQNREVGoAQIBDFIRUnkCAQlTEVPKAQIBBFFfUXQCAQ9RKlE4AgENUmhSdgIBClO5AVPHAQIBB1OjAVOtAQIBBQ==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="ReadTextFile_2" sap:VirtualizedContainerService.HintSize="314,59" />
       <sap2010:ViewStateData Id="WriteLine_6" sap:VirtualizedContainerService.HintSize="314,61" />
       <sap2010:ViewStateData Id="DeserializeJson`1_3" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Sequence_76" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="Sequence_76" sap:VirtualizedContainerService.HintSize="336,384">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -836,7 +836,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_10" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="Flowchart_10" sap:VirtualizedContainerService.HintSize="614,862">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
