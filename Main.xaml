@@ -66,90 +66,90 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
-    <Flowchart.Variables>
-      <Variable x:TypeArguments="njl:JObject" Name="config" />
-    </Flowchart.Variables>
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_57">
-        <Flowchart DisplayName="メール送信するサンプル(JSON設定ファイルをリード)" sap2010:WorkflowViewState.IdRef="Flowchart_10">
+      <FlowStep x:Name="__ReferenceID14" sap2010:WorkflowViewState.IdRef="FlowStep_60">
+        <Flowchart DisplayName="REST送受信サンプル" sap2010:WorkflowViewState.IdRef="Flowchart_11">
+          <Flowchart.Variables>
+            <Variable x:TypeArguments="njl:JObject" Name="config" />
+            <Variable x:TypeArguments="njl:JToken" Name="userinfo" />
+            <Variable x:TypeArguments="njl:JToken" Name="serverinfo" />
+          </Flowchart.Variables>
           <Flowchart.StartNode>
-            <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_58">
-              <Sequence DisplayName="read_config" sap2010:WorkflowViewState.IdRef="Sequence_76">
+            <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_61">
+              <Sequence DisplayName="read_config" sap2010:WorkflowViewState.IdRef="Sequence_78">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="x:String" Name="config_str" />
                 </Sequence.Variables>
-                <ui:ReadTextFile Content="[config_str]" DisplayName="Read text file" FileName="config/default.json" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
-                <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_6" Text="[config_str]" />
-                <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_3" JsonObject="[config]" JsonString="[config_str]" />
+                <ui:ReadTextFile Content="[config_str]" DisplayName="Read text file" FileName="config/rest/default.json" sap2010:WorkflowViewState.IdRef="ReadTextFile_3" />
+                <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_7" Text="[config_str]" />
+                <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_4" JsonObject="[config]" JsonString="[config_str]" />
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_27">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="njl:JToken">[userinfo]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="njl:JToken">[config("userinfo")]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_28">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="njl:JToken">[serverinfo]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="njl:JToken">[config("serverinfo")]</InArgument>
+                  </Assign.Value>
+                </Assign>
               </Sequence>
+              <FlowStep.Next>
+                <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_62">
+                  <Sequence DisplayName="REST 送受信" sap2010:WorkflowViewState.IdRef="Sequence_79">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="result" />
+                      <Variable x:TypeArguments="njl:JObject" Name="obj" />
+                      <Variable x:TypeArguments="ui:GenericValue" Name="UsernameOrEmailAddress" />
+                      <Variable x:TypeArguments="ui:GenericValue" Name="Password" />
+                    </Sequence.Variables>
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_29">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="ui:GenericValue">[UsernameOrEmailAddress]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="ui:GenericValue">[userinfo("UsernameOrEmailAddress").ToString]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_30">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="ui:GenericValue">[Password]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="ui:GenericValue">[userinfo("Password").ToString]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="[serverinfo(&quot;servername&quot;).ToString + &quot;/api/account/authenticate&quot;]" />
+                    <ui:HttpClient ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" StatusCode="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" Body="[&quot;{&quot;&quot;UsernameOrEmailAddress&quot;&quot;:&quot;&quot;&quot; +  UsernameOrEmailAddress  +   &quot;&quot;&quot;,&quot;&quot;Password&quot;&quot;:&quot;&quot;&quot;+  Password +&quot;&quot;&quot;}&quot;]" BodyFormat="application/json" DisplayName="HTTP Request" EndPoint="[serverinfo(&quot;servername&quot;).ToString + &quot;/api/account/authenticate&quot;]" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="POST" Result="[result]" TimeoutMS="6000">
+                      <ui:HttpClient.Attachments>
+                        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                      </ui:HttpClient.Attachments>
+                      <ui:HttpClient.Headers>
+                        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                      </ui:HttpClient.Headers>
+                      <ui:HttpClient.Parameters>
+                        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                      </ui:HttpClient.Parameters>
+                      <ui:HttpClient.UrlSegments>
+                        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                      </ui:HttpClient.UrlSegments>
+                    </ui:HttpClient>
+                    <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_8" Text="[result]" />
+                    <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_5" JsonObject="[obj]" JsonString="[result]" />
+                    <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_9" Text="[obj(&quot;result&quot;).ToString]" />
+                  </Sequence>
+                </FlowStep>
+              </FlowStep.Next>
             </FlowStep>
           </Flowchart.StartNode>
           <x:Reference>__ReferenceID0</x:Reference>
-          <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_59">
-            <Sequence DisplayName="send_mail" sap2010:WorkflowViewState.IdRef="Sequence_77">
-              <Sequence.Variables>
-                <Variable x:TypeArguments="x:String" Name="smtp" />
-                <Variable x:TypeArguments="x:String" Name="user" />
-                <Variable x:TypeArguments="x:String" Name="password" />
-                <Variable x:TypeArguments="x:Int32" Name="port" />
-                <Variable x:TypeArguments="x:String" Name="from" />
-                <Variable x:TypeArguments="x:String" Name="address_to" />
-              </Sequence.Variables>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_21">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="x:String">[smtp]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="x:String">[config("smtp")("host").ToString]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_22">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="x:String">[user]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="x:String">[config("smtp")("auth")("user").ToString]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_23">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="x:String">[password]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="x:String">[config("smtp")("auth")("pass").ToString]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign DisplayName="Assign (型変換)" sap2010:WorkflowViewState.IdRef="Assign_24">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="x:Int32">[port]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32(config("smtp")("port").ToString)]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_25">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="x:String">[from]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="x:String">[config("mail")("from").ToString]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_26">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="x:String">[address_to]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="x:String">[config("mail")("to").ToString]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="テストメール" DisplayName="Send SMTP Mail Message" Email="[user]" EnableSSL="True" From="[from]" sap2010:WorkflowViewState.IdRef="SendMail_2" IsBodyHtml="False" Name="Masatomi KINO" Password="[password]" Port="[port]" SecureConnection="Auto" Server="[smtp]" Subject="テスト" To="[address_to]">
-                <ui:SendMail.Files>
-                  <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
-                </ui:SendMail.Files>
-              </ui:SendMail>
-            </Sequence>
-          </FlowStep>
+          <x:Reference>__ReferenceID1</x:Reference>
         </Flowchart>
       </FlowStep>
     </Flowchart.StartNode>
@@ -165,13 +165,13 @@
           <Variable x:TypeArguments="x:String" Name="input" />
         </Flowchart.Variables>
         <Flowchart.StartNode>
-          <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_25">
+          <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_25">
             <Flowchart DisplayName="Guessing Game Flow" sap2010:WorkflowViewState.IdRef="Flowchart_5">
               <Flowchart.Variables>
                 <Variable x:TypeArguments="x:String" Name="message" />
               </Flowchart.Variables>
               <Flowchart.StartNode>
-                <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_23">
+                <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_23">
                   <Assign sap2010:WorkflowViewState.IdRef="Assign_9">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Int32">[randomNumber]</OutArgument>
@@ -181,23 +181,23 @@
                     </Assign.Value>
                   </Assign>
                   <FlowStep.Next>
-                    <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_22">
+                    <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_22">
                       <ui:InputDialog Label="{x:Null}" Options="{x:Null}" DisplayName="Input dialog" sap2010:WorkflowViewState.IdRef="InputDialog_5" IsPassword="False" Title="入力してください">
                         <ui:InputDialog.Result>
                           <OutArgument x:TypeArguments="x:String">[input]</OutArgument>
                         </ui:InputDialog.Result>
                       </ui:InputDialog>
                       <FlowStep.Next>
-                        <FlowDecision x:Name="__ReferenceID3" Condition="[Integer.Parse(input) = randomNumber]" sap2010:WorkflowViewState.IdRef="FlowDecision_6">
+                        <FlowDecision x:Name="__ReferenceID4" Condition="[Integer.Parse(input) = randomNumber]" sap2010:WorkflowViewState.IdRef="FlowDecision_6">
                           <FlowDecision.True>
-                            <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_19">
+                            <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_19">
                               <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_14" Text="Bingo!" TopMost="True" />
                             </FlowStep>
                           </FlowDecision.True>
                           <FlowDecision.False>
-                            <FlowDecision x:Name="__ReferenceID5" Condition="[Integer.Parse(input) &gt; randomNumber]" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
+                            <FlowDecision x:Name="__ReferenceID6" Condition="[Integer.Parse(input) &gt; randomNumber]" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
                               <FlowDecision.True>
-                                <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_28">
+                                <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_28">
                                   <Assign sap2010:WorkflowViewState.IdRef="Assign_11">
                                     <Assign.To>
                                       <OutArgument x:TypeArguments="x:String">[message]</OutArgument>
@@ -207,17 +207,17 @@
                                     </Assign.Value>
                                   </Assign>
                                   <FlowStep.Next>
-                                    <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_20">
+                                    <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_20">
                                       <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_15" Text="[message]" TopMost="True" />
                                       <FlowStep.Next>
-                                        <x:Reference>__ReferenceID1</x:Reference>
+                                        <x:Reference>__ReferenceID2</x:Reference>
                                       </FlowStep.Next>
                                     </FlowStep>
                                   </FlowStep.Next>
                                 </FlowStep>
                               </FlowDecision.True>
                               <FlowDecision.False>
-                                <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_29">
+                                <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_29">
                                   <Assign sap2010:WorkflowViewState.IdRef="Assign_12">
                                     <Assign.To>
                                       <OutArgument x:TypeArguments="x:String">[message]</OutArgument>
@@ -227,7 +227,7 @@
                                     </Assign.Value>
                                   </Assign>
                                   <FlowStep.Next>
-                                    <x:Reference>__ReferenceID2</x:Reference>
+                                    <x:Reference>__ReferenceID3</x:Reference>
                                   </FlowStep.Next>
                                 </FlowStep>
                               </FlowDecision.False>
@@ -239,14 +239,14 @@
                   </FlowStep.Next>
                 </FlowStep>
               </Flowchart.StartNode>
-              <x:Reference>__ReferenceID1</x:Reference>
-              <x:Reference>__ReferenceID3</x:Reference>
+              <x:Reference>__ReferenceID2</x:Reference>
               <x:Reference>__ReferenceID4</x:Reference>
               <x:Reference>__ReferenceID5</x:Reference>
-              <x:Reference>__ReferenceID2</x:Reference>
               <x:Reference>__ReferenceID6</x:Reference>
+              <x:Reference>__ReferenceID3</x:Reference>
               <x:Reference>__ReferenceID7</x:Reference>
               <x:Reference>__ReferenceID8</x:Reference>
+              <x:Reference>__ReferenceID9</x:Reference>
             </Flowchart>
           </FlowStep>
         </Flowchart.StartNode>
@@ -307,7 +307,7 @@
             </DoWhile>
           </Sequence>
         </FlowStep>
-        <x:Reference>__ReferenceID9</x:Reference>
+        <x:Reference>__ReferenceID10</x:Reference>
       </Flowchart>
     </FlowStep>
     <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_33">
@@ -408,7 +408,7 @@
     <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_48">
       <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_9">
         <Flowchart.StartNode>
-          <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_50">
+          <FlowStep x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowStep_50">
             <Sequence DisplayName="画面遷移" sap2010:WorkflowViewState.IdRef="Sequence_40">
               <ui:OpenBrowser UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Open https://www.yahoo.co.jp/" Hidden="False" sap2010:WorkflowViewState.IdRef="OpenBrowser_5" NewSession="True" Private="False" Url="https://www.yahoo.co.jp/">
                 <ui:OpenBrowser.Body>
@@ -439,7 +439,7 @@
               </ui:OpenBrowser>
             </Sequence>
             <FlowStep.Next>
-              <FlowStep x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowStep_49">
+              <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_49">
                 <Sequence DisplayName="データ取得～出力" sap2010:WorkflowViewState.IdRef="Sequence_45">
                   <Sequence DisplayName="Data scraping" sap2010:WorkflowViewState.IdRef="Sequence_44">
                     <Sequence.Variables>
@@ -531,8 +531,8 @@
             </FlowStep.Next>
           </FlowStep>
         </Flowchart.StartNode>
-        <x:Reference>__ReferenceID10</x:Reference>
         <x:Reference>__ReferenceID11</x:Reference>
+        <x:Reference>__ReferenceID12</x:Reference>
       </Flowchart>
     </FlowStep>
     <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_52">
@@ -791,44 +791,120 @@
         </ui:OpenBrowser>
       </Sequence>
     </FlowStep>
-    <x:Reference>__ReferenceID12</x:Reference>
-    <sads:DebugSymbol.Symbol>dx5aOlxnaXRcdWlwYXRoX3NhbXBsZVxNYWluLnhhbWwLRAOcBg8CAQFKCZkBFQIBAk0PVBoCAQNREVGoAQIBDFIRUnkCAQlTEVPKAQIBBFFfUXQCAQ9RKlE4AgENUmhSdgIBClO5AVPHAQIBB1OjAVOtAQIBBQ==</sads:DebugSymbol.Symbol>
+    <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_57">
+      <Flowchart DisplayName="メール送信するサンプル(JSON設定ファイルをリード)" sap2010:WorkflowViewState.IdRef="Flowchart_10">
+        <Flowchart.StartNode>
+          <FlowStep x:Name="__ReferenceID13" sap2010:WorkflowViewState.IdRef="FlowStep_58">
+            <Sequence DisplayName="read_config" sap2010:WorkflowViewState.IdRef="Sequence_76">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:String" Name="config_str" />
+              </Sequence.Variables>
+              <ui:ReadTextFile Content="[config_str]" DisplayName="Read text file" FileName="config/default.json" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
+              <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_6" Text="[config_str]" />
+              <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_3" JsonObject="[config]" JsonString="[config_str]" />
+            </Sequence>
+          </FlowStep>
+        </Flowchart.StartNode>
+        <x:Reference>__ReferenceID13</x:Reference>
+        <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_59">
+          <Sequence DisplayName="send_mail" sap2010:WorkflowViewState.IdRef="Sequence_77">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="smtp" />
+              <Variable x:TypeArguments="x:String" Name="user" />
+              <Variable x:TypeArguments="x:String" Name="password" />
+              <Variable x:TypeArguments="x:Int32" Name="port" />
+              <Variable x:TypeArguments="x:String" Name="from" />
+              <Variable x:TypeArguments="x:String" Name="address_to" />
+            </Sequence.Variables>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_21">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[smtp]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[config("smtp")("host").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_22">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[user]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[config("smtp")("auth")("user").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_23">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[password]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[config("smtp")("auth")("pass").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Assign (型変換)" sap2010:WorkflowViewState.IdRef="Assign_24">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[port]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32(config("smtp")("port").ToString)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_25">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[from]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[config("mail")("from").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_26">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[address_to]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[config("mail")("to").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="テストメール" DisplayName="Send SMTP Mail Message" Email="[user]" EnableSSL="True" From="[from]" sap2010:WorkflowViewState.IdRef="SendMail_2" IsBodyHtml="False" Name="Masatomi KINO" Password="[password]" Port="[port]" SecureConnection="Auto" Server="[smtp]" Subject="テスト" To="[address_to]">
+              <ui:SendMail.Files>
+                <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+              </ui:SendMail.Files>
+            </ui:SendMail>
+          </Sequence>
+        </FlowStep>
+      </Flowchart>
+    </FlowStep>
+    <x:Reference>__ReferenceID14</x:Reference>
+    <sads:DebugSymbol.Symbol>dx5aOlxnaXRcdWlwYXRoX3NhbXBsZVxNYWluLnhhbWwmRAPuBg8CAQFHCZkBFQIBAk8PZhoCAR5pE5IBHgIBA1MRU60BAgExVBFUeQIBLlURVcoBAgEpVhFdGgIBJF4RZRoCAR9wFXceAgEaeBV/HgIBFoABFYABxwECARSBARWOASUCAQ6PARWPAXkCAQuQARWQAccBAgEGkQEVkQGTAQIBBFNfU3kCATRTKlM4AgEyVGhUdgIBL1W5AVXHAQIBLFWjAVWtAQIBKls+W1ICASdYP1hJAgElYz5jVAIBImA/YEsCASB1R3V0AgEdckhyYAIBG31HfWYCARl6SHpSAgEXgAFtgAHEAQIBFYEB9gWBAfwFAgETgQGqAoEBggQCARKBAeEFgQHrBQIBEIEBxQSBAZwFAgEPjwFsjwF2AgEMkAG6AZABxAECAQmQAacBkAGuAQIBB5EBbJEBkAECAQU=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="ReadTextFile_2" sap:VirtualizedContainerService.HintSize="314,59" />
-      <sap2010:ViewStateData Id="WriteLine_6" sap:VirtualizedContainerService.HintSize="314,61" />
-      <sap2010:ViewStateData Id="DeserializeJson`1_3" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Sequence_76" sap:VirtualizedContainerService.HintSize="336,384">
+      <sap2010:ViewStateData Id="ReadTextFile_3" sap:VirtualizedContainerService.HintSize="314,59" />
+      <sap2010:ViewStateData Id="WriteLine_7" sap:VirtualizedContainerService.HintSize="314,61" />
+      <sap2010:ViewStateData Id="DeserializeJson`1_4" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_27" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_28" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Sequence_78" sap:VirtualizedContainerService.HintSize="336,584">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_58">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">190,154.5</av:Point>
-            <av:Size x:Key="ShapeSize">200,51</av:Size>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Assign_21" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_22" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_23" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_24" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_25" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="Assign_26" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="SendMail_2" sap:VirtualizedContainerService.HintSize="314,145" />
-      <sap2010:ViewStateData Id="Sequence_77" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="Assign_29" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_30" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="WriteLine_10" sap:VirtualizedContainerService.HintSize="314,61" />
+      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="WriteLine_8" sap:VirtualizedContainerService.HintSize="314,61" />
+      <sap2010:ViewStateData Id="DeserializeJson`1_5" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="WriteLine_9" sap:VirtualizedContainerService.HintSize="314,61" />
+      <sap2010:ViewStateData Id="Sequence_79" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_59">
+      <sap2010:ViewStateData Id="FlowStep_62">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,264.5</av:Point>
@@ -836,21 +912,29 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_10" sap:VirtualizedContainerService.HintSize="614,862">
+      <sap2010:ViewStateData Id="FlowStep_61">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
-            <av:Size x:Key="ShapeSize">60,75</av:Size>
-            <x:Double x:Key="Height">825.5</x:Double>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 290,107.5 290,154.5</av:PointCollection>
+            <av:Point x:Key="ShapeLocation">200,144.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,195.5 300,264.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_57">
+      <sap2010:ViewStateData Id="Flowchart_11" sap:VirtualizedContainerService.HintSize="614,636">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">320,604.5</av:Point>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,144.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_60">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">320,704.5</av:Point>
             <av:Size x:Key="ShapeSize">200,51</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -1578,13 +1662,72 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ReadTextFile_2" sap:VirtualizedContainerService.HintSize="314,59" />
+      <sap2010:ViewStateData Id="WriteLine_6" sap:VirtualizedContainerService.HintSize="314,61" />
+      <sap2010:ViewStateData Id="DeserializeJson`1_3" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Sequence_76" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_58">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">190,154.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_21" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_22" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_23" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_24" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_25" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_26" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="SendMail_2" sap:VirtualizedContainerService.HintSize="314,145" />
+      <sap2010:ViewStateData Id="Sequence_77" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_59">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,264.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_10" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
+            <x:Double x:Key="Height">825.5</x:Double>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 290,107.5 290,154.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_57">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">320,604.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="624,982">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 0,107.5 0,574.5 420,574.5 420,604.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 0,107.5 0,764.5 290,764.5 290,674.5 420,674.5 420,704.5</av:PointCollection>
             <x:Double x:Key="Height">945.5</x:Double>
             <x:Double x:Key="Width">610</x:Double>
           </scg:Dictionary>
